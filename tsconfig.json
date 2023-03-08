@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",                                  
+    "module": "commonjs",                                
+    "outDir": "./dist",
+    "sourceMap": true,
+    "rootDir": "./",                                  
+    "moduleResolution": "node",                       
+    "baseUrl": "./src",                                 
+    "resolveJsonModule": true,                      
+    "esModuleInterop": true,                             
+    "forceConsistentCasingInFileNames": true,            
+    "allowJs": true,
+    "strict": false, 
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "typeRoots": [
+      "@types",
+      "./node_modules/@types",
+    ]   
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
