@@ -8,15 +8,13 @@ export class CreateUserController {
     const { firstName, lastName, birthDate, city, country, email, password, confirmPassword } = req.body
 
     if (password !== confirmPassword) {
-      throw new BaseError(400, 'The password and confirmPassword are not the same')
+      throw new ValidationError('Validation Error: The password and confirmPassword are not the same')
     }
 
     const existingUser = await User.findOne({ email })
 
     if (existingUser) {
-      throw new ValidationError(401, 'Validation Error', {
-        error: 'This email already exists'
-      })
+      throw new ValidationError('Validation Error: This email already exists')
     }
 
     await User.create({ firstName, lastName, birthDate, city, country, email, password, confirmPassword })
