@@ -1,9 +1,19 @@
 import { Request, Response, NextFunction } from 'express'
 
-export const asyncHandler = (fn) => (req: Request, res: Response, next: NextFunction) => Promise.resolve(fn(req, res, next)).catch(next)
+export const asyncHandler =
+  (fn) => (req: Request, res: Response, next: NextFunction) =>
+    Promise.resolve(fn(req, res, next)).catch(next)
 
-export const errorResponse = (err, req: Request, res: Response, next: NextFunction) => {
-  const customError = !(err.constructor.name === 'NodeError' || err.constructor.name === 'SyntaxError')
+export const errorResponse = (
+  err,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const customError = !(
+    err.constructor.name === 'NodeError' ||
+    err.constructor.name === 'SyntaxError'
+  )
 
   res.status(err.statusCode || 500).json({
     response: 'Error',
@@ -12,8 +22,8 @@ export const errorResponse = (err, req: Request, res: Response, next: NextFuncti
       path: req.path,
       statusCode: err.statusCode || 500,
       message: err.message,
-      cause: err.cause
-    }
+      cause: err.cause,
+    },
   })
 
   next(err)
@@ -21,7 +31,10 @@ export const errorResponse = (err, req: Request, res: Response, next: NextFuncti
 
 // se n me engano, n está funcional ainda, não arrumei sipa
 export const errorLogging = (err, req: Request, next: NextFunction) => {
-  const customError = !(err.constructor.name === 'NodeError' || err.constructor.name === 'SyntaxError')
+  const customError = !(
+    err.constructor.name === 'NodeError' ||
+    err.constructor.name === 'SyntaxError'
+  )
 
   console.log('ERROR')
   console.log(`Type: ${customError ? 'UnhandledError' : err.constructor.name}`)

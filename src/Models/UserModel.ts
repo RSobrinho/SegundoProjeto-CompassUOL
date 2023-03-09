@@ -1,19 +1,20 @@
 import { Schema, model, Document } from 'mongoose'
 import { hash, compare } from 'bcrypt'
+import validator from 'validator'
 // import crypto from 'crypto'
 export interface IUserSchema extends Document {
-  firstName: string,
-  lastName: string,
-  birthDate: Date,
-  city: string,
-  country: string,
-  email: string,
-  password: string,
+  firstName: string
+  lastName: string
+  birthDate: Date
+  city: string
+  country: string
+  email: string
+  password: string
   confirmPassword: string
-  role: string[],
-  passwordChangedAt: Date,
-  changedPasswordAfter(JWTTimestamp: number): boolean,
-  verifyPass(): Promise<boolean>
+  role: string[]
+  passwordChangedAt: Date
+  changedPasswordAfter(): boolean
+  verifyPass(candidatePassword, userPassword): Promise<boolean>
 }
 
 const UserSchema = new Schema({
@@ -24,22 +25,25 @@ const UserSchema = new Schema({
   country: String,
   email: {
     type: String,
-    unique: true
+    unique: true,
+    lowercase: true,
+    required: [true, 'Email is required'],
+    validate: [validator.isEmail, 'Provide a valid email.'],
   },
   password: String,
   confirmPassword: String,
   role: {
     type: String,
     enum: ['user', 'admin'],
-    default: 'user'
+    default: 'user',
   },
   passwordChangedAt: Date,
   events: [
     {
       type: String,
-      ref: 'Event'
-    }
-  ]
+      ref: 'Event',
+    },
+  ],
 })
 
 UserSchema.pre('save', async function (next) {
@@ -54,11 +58,14 @@ UserSchema.pre('save', async function (next) {
 UserSchema.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew) return next()
 
-  this.passwordChangedAt = Date.now() - 1000 as unknown as Date
+  this.passwordChangedAt = (Date.now() - 1000) as unknown as Date
   next()
 })
 
-UserSchema.methods.verifyPass = async function (candidatePassword, userPassword) {
+UserSchema.methods.verifyPass = async function (
+  candidatePassword,
+  userPassword,
+) {
   return await compare(candidatePassword, userPassword)
 }
 
@@ -68,7 +75,7 @@ UserSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       this.passwordChangedAt.getTime() / 1000,
-      10
+      10,
     )
 
     return JWTTimestamp < changedTimestamp

@@ -4,7 +4,7 @@ import { getEventByWeekdayController } from './GetEventByWeekdayController'
 import Event from '../../Models/EventModel'
 
 export class GetAllEventsController {
-  async handle (req: Request, res: Response): Promise<Response> {
+  async handle(req: Request, res: Response): Promise<Response> {
     if (req.query.dayOfWeek) {
       return getEventByWeekdayController.handle(req, res)
     }

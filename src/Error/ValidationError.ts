@@ -1,7 +1,7 @@
 import { BaseError } from './BaseError'
 
 export class ValidationError extends BaseError {
-  constructor (message: string) {
+  constructor(message: string) {
     super(400, message)
   }
 }

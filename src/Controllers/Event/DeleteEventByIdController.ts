@@ -3,7 +3,7 @@ import { BaseError } from '../../Error/BaseError'
 import Event from '../../Models/EventModel'
 
 export class DeleteEventByIdController {
-  async handle (req: Request, res: Response): Promise<Response> {
+  async handle(req: Request, res: Response): Promise<Response> {
     const event = await Event.findById(req.params.id)
     console.log(event)
 

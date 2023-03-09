@@ -3,7 +3,7 @@ import { BaseError } from '../../Error/BaseError'
 import Event from '../../Models/EventModel'
 
 export class GetEventByIdController {
-  async handle (req: Request, res: Response): Promise<Response> {
+  async handle(req: Request, res: Response): Promise<Response> {
     const event = await Event.findById(req.params.id)
 
     if (!event) {
