@@ -1,6 +1,7 @@
 import User from '../../Models/UserModel'
 import { ValidationError } from '../../Error/ValidationError'
 import { Request, Response } from 'express'
+import { sendJWT } from '../Auth/SendJWT'
 
 export class SignInUserController {
   async handle(req: Request, res: Response): Promise<Response> {
@@ -20,7 +21,7 @@ export class SignInUserController {
       )
     }
 
-    return res.status(200).json({ status: 'Success', message: 'User LoggedIn' })
+    return sendJWT.handle(user, 'User logged in successfully', 200, res)
   }
 }
 

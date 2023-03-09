@@ -13,7 +13,7 @@ export interface IUserSchema extends Document {
   confirmPassword: string
   role: string[]
   passwordChangedAt: Date
-  changedPasswordAfter(): boolean
+  changedPasswordAfter(JWTTimestamp): boolean
   verifyPass(candidatePassword, userPassword): Promise<boolean>
 }
 
