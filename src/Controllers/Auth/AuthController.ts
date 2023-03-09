@@ -6,16 +6,16 @@ import { config } from 'dotenv'
 config()
 
 interface jwtDecoded {
-  _id: string
+  id: string
   iat: number
   exp: number
 }
 
 export class AuthController {
-  async handle(
+  async handle (
     req: Request,
     next: NextFunction,
-    availableRoles,
+    availableRoles
   ): Promise<Response | void> {
     let token: string
 
@@ -30,7 +30,9 @@ export class AuthController {
       return next(new AuthError('Please log in to get access.'))
     }
 
-    const { _id, iat } = verify(
+    console.log(token)
+
+    const { id, iat } = verify(
       token,
       process.env.JWT_SECRET,
       (err, decoded) => {
@@ -38,22 +40,23 @@ export class AuthController {
           return next(new AuthError('Don`t know yet'))
         }
         return decoded
-      },
+      }
     ) as unknown as jwtDecoded
 
-    const existingUser = await User.findById(_id)
+    const existingUser = await User.findById(id)
+    console.log(id, existingUser)
 
     if (!existingUser) {
       return next(
         new AuthError(
-          'The token belonging to this user does not exist anymore.',
-        ),
+          'The token belonging to this user does not exist anymore.'
+        )
       )
     }
 
     if (existingUser.changedPasswordAfter(iat)) {
       return next(
-        new AuthError('User recently changed password! Please log in again.'),
+        new AuthError('User recently changed password! Please log in again.')
       )
     }
 
@@ -61,7 +64,7 @@ export class AuthController {
 
     if (!availableRoles.includes(req.user.role)) {
       return next(
-        new AuthError('You do note have permission to perform this action'),
+        new AuthError('You do note have permission to perform this action')
       )
     }
 
