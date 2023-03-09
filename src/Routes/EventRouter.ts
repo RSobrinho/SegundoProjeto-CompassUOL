@@ -8,3 +8,5 @@ router.route('/')
   .post(asyncHandler((request: Request, response: Response) => {
     return CreateEventrController.handle(request, response)
   }))
+
+export default router

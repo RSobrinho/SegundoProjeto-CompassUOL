@@ -4,6 +4,7 @@ import swaggerDocs from '../swagger.json'
 import mongoose from 'mongoose'
 import BaseRouter from './Routes/BaseRouter'
 import UserRouter from './Routes/UserRouter'
+import EventRouter from './Routes/EventRouter'
 import { errorResponse } from './Error/Handler'
 import { config } from 'dotenv'
 import { join } from 'path'
@@ -45,6 +46,7 @@ class App {
   private routes () {
     this.express.use('/', BaseRouter)
     this.express.use('/api/v1/users', UserRouter)
+    this.express.use('/api/v1/events', EventRouter)
   }
 }
 
