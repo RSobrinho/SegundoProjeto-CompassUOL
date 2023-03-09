@@ -1,12 +1,12 @@
 import { Router, Request, Response } from 'express'
-import { CreateEventrController } from '../Controllers/Event/createEventController'
+import { CreateEventrController as CreateEventController } from '../Controllers/Event/createEventController'
 import { asyncHandler } from '../Error/Handler'
 
 const router = Router()
 
 router.route('/')
   .post(asyncHandler((request: Request, response: Response) => {
-    return CreateEventrController.handle(request, response)
+    return CreateEventController.handle(request, response)
   }))
 
 export default router
