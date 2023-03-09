@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { BaseError } from '../../Error/BaseError'
 import { ValidationError } from '../../Error/ValidationError'
-import User from '../../Models/userModel'
+import User from '../../Models/UserModel'
 
 export class CreateUserController {
   async handle (req: Request, res: Response): Promise<Response> {

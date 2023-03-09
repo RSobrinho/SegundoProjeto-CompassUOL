@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { BaseError } from '../../Error/BaseError'
 import { getEventByWeekdayController } from './GetEventByWeekdayController'
-import Event from '../../Models/eventModel'
+import Event from '../../Models/EventModel'
 
 export class GetAllEventsController {
   async handle (req: Request, res: Response): Promise<Response> {

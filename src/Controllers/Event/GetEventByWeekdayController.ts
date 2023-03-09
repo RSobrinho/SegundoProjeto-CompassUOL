@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { BaseError } from '../../Error/BaseError'
-import Event from '../../Models/eventModel'
+import Event from '../../Models/EventModel'
 
 export class GetEventByWeekdayController {
   weekday = [
