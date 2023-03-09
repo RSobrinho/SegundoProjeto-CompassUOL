@@ -12,7 +12,7 @@ import { join } from 'path'
 class App {
   public express: express.Application
   public constructor () {
-    config()
+    config({ path: '.env.example' })
 
     this.express = express()
     this.settings()
