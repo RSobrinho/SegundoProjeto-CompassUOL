@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import { CreateEventrController as CreateEventController } from '../Controllers/Event/createEventController'
+import { createEventController } from '../Controllers/Event/createEventController'
 import { deleteEventByIdController } from '../Controllers/Event/DeleteEventByIdController'
 import { asyncHandler } from '../Error/Handler'
 
@@ -7,7 +7,7 @@ const router = Router()
 
 router.route('/')
   .post(asyncHandler((request: Request, response: Response) => {
-    return CreateEventController.handle(request, response)
+    return createEventController.handle(request, response)
   }))
 
 router.route('/:id')
