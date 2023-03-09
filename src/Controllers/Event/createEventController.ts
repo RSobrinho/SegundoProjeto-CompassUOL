@@ -18,4 +18,4 @@ export class CreateEventController {
   }
 }
 
-export const CreateEventrController = new CreateEventController()
+export const createEventController = new CreateEventController()
