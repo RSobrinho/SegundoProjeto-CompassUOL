@@ -1,19 +1,20 @@
-import { Schema, model, Document } from 'mongoose'
-import { hash, compare } from 'bcrypt'
+import { Schema, model, Document } from 'mongoose';
+import { hash, compare } from 'bcrypt';
+import validator from 'validator';
 // import crypto from 'crypto'
 interface IUserSchema extends Document {
-  firstName: string,
-  lastName: string,
-  birthDate: Date,
-  city: string,
-  country: string,
-  email: string,
-  password: string,
-  confirmPassword: string
-  role: string[],
-  passwordChangedAt: Date,
-  changedPasswordAfter(): boolean,
-  verifyPass(): Promise<boolean>
+  firstName: string;
+  lastName: string;
+  birthDate: Date;
+  city: string;
+  country: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  role: string[];
+  passwordChangedAt: Date;
+  changedPasswordAfter(): boolean;
+  verifyPass(candidatePassword, userPassword): Promise<boolean>;
 }
 
 const UserSchema = new Schema({
@@ -24,43 +25,49 @@ const UserSchema = new Schema({
   country: String,
   email: {
     type: String,
-    unique: true
+    unique: true,
+    lowercase: true,
+    required: [true, 'Email is required'],
+    validate: [validator.isEmail, 'Provide a valid email.'],
   },
   password: String,
   confirmPassword: String,
   role: {
     type: String,
     enum: ['user', 'admin'],
-    default: 'user'
+    default: 'user',
   },
   passwordChangedAt: Date,
   events: [
     {
       type: String,
-      ref: 'Event'
-    }
-  ]
-})
+      ref: 'Event',
+    },
+  ],
+});
 
 UserSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next()
+  if (!this.isModified('password')) return next();
 
-  this.password = await hash(this.password, 12)
+  this.password = await hash(this.password, 12);
 
-  this.confirmPassword = undefined
-  next()
-})
+  this.confirmPassword = undefined;
+  next();
+});
 
 UserSchema.pre('save', function (next) {
-  if (!this.isModified('password') || this.isNew) return next()
+  if (!this.isModified('password') || this.isNew) return next();
 
-  this.passwordChangedAt = Date.now() - 1000 as unknown as Date
-  next()
-})
+  this.passwordChangedAt = (Date.now() - 1000) as unknown as Date;
+  next();
+});
 
-UserSchema.methods.verifyPass = async function (candidatePassword, userPassword) {
-  return await compare(candidatePassword, userPassword)
-}
+UserSchema.methods.verifyPass = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await compare(candidatePassword, userPassword);
+};
 
 UserSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.passwordChangedAt) {
@@ -69,12 +76,12 @@ UserSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
       // @ts-ignore
       this.passwordChangedAt.getTime() / 1000,
       10
-    )
+    );
 
-    return JWTTimestamp < changedTimestamp
+    return JWTTimestamp < changedTimestamp;
   }
 
-  return false
-}
+  return false;
+};
 
-export default model<IUserSchema>('User', UserSchema)
+export default model<IUserSchema>('User', UserSchema);
