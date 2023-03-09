@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { BaseError } from '../../Error/BaseError'
 import Event from '../../Models/eventModel'
 
-export class createEventController {
+export class CreateEventController {
   async handle (req: Request, res: Response): Promise<Response> {
     const { description, dayOfWeek, createdAt } = req.body
 
@@ -17,3 +17,5 @@ export class createEventController {
     return res.status(201).json({ status: 'Success', message: 'Event added successfully' })
   }
 }
+
+export const CreateEventrController = new CreateEventController()
