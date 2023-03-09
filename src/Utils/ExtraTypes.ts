@@ -1,9 +1,9 @@
-// import { IGlobal, User } from '../Entities/User'
+import { IUserSchema } from 'Models/UserModel'
 
-// declare module 'express-serve-static-core' {
-//   interface Request {
-//     user: User<IGlobal>
-//   }
-// }
+declare module 'express-serve-static-core' {
+  interface Request {
+    user: IUserSchema
+  }
+}
 
-// ver como fazer dps
+// top
