@@ -30,8 +30,6 @@ export class AuthController {
       return next(new AuthError('Please log in to get access.'))
     }
 
-    console.log(token)
-
     const { id, iat } = verify(
       token,
       process.env.JWT_SECRET,
@@ -44,7 +42,6 @@ export class AuthController {
     ) as unknown as jwtDecoded
 
     const existingUser = await User.findById(id)
-    console.log(id, existingUser)
 
     if (!existingUser) {
       return next(
