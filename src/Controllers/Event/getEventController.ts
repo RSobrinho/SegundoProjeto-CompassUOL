@@ -1,0 +1,13 @@
+import { Request, Response } from 'express'
+import { BaseError } from '../../Error/BaseError'
+import Event from '../../Models/eventModel'
+
+export class GetAllEventsController {
+  async handle(req: Request, res: Response): Promise<Response> {
+    const events = await Event.find()
+    if (events.length === 0) {
+      throw new BaseError(404, 'No events found')
+    }
+    return res.status(200).json({ status: 'success', events })
+  }
+}
