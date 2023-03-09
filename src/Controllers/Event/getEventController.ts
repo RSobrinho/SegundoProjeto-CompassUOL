@@ -11,3 +11,5 @@ export class GetAllEventsController {
     return res.status(200).json({ status: 'success', events })
   }
 }
+
+// top

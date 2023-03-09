@@ -1,7 +1,7 @@
 import { Schema, model, Document } from 'mongoose'
 import { hash, compare } from 'bcrypt'
 // import crypto from 'crypto'
-interface IUserSchema extends Document {
+export interface IUserSchema extends Document {
   firstName: string,
   lastName: string,
   birthDate: Date,
@@ -12,7 +12,7 @@ interface IUserSchema extends Document {
   confirmPassword: string
   role: string[],
   passwordChangedAt: Date,
-  changedPasswordAfter(): boolean,
+  changedPasswordAfter(JWTTimestamp: number): boolean,
   verifyPass(): Promise<boolean>
 }
 
