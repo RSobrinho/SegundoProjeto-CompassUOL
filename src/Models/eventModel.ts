@@ -1,18 +1,16 @@
 import { Schema, model, Document } from 'mongoose'
 
 interface IEventSchema extends Document {
-    _id: string,
     description: string,
-    dayOfTheWeek: string,
+    dayOfWeek: string,
     createdAt: Date,
-    user: string
+    user: string,
 }
 
 const EventSchema = new Schema({
-  _id: String,
   description: String,
-  dayOfTheWeek: String,
-  createdAt: Date,
+  dayOfWeek: String,
+  createdAt: { type: Date, default: Date.now() },
   user: {
     type: String,
     ref: 'User'
