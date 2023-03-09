@@ -3,9 +3,9 @@ import { BaseError } from '../../Error/BaseError'
 import Event from '../../Models/eventModel'
 
 export class DeleteEventByIdController {
-  async handle(req: Request, res: Response): Promise<Response> {
-    const event = await Event.findById( req.params.id )
-    console.log(event);
+  async handle (req: Request, res: Response): Promise<Response> {
+    const event = await Event.findById(req.params.id)
+    console.log(event)
 
     if (!event) throw new BaseError(409, 'No event find by this Id.')
 
