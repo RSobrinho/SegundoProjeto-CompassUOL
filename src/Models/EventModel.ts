@@ -1,16 +1,16 @@
 import { Schema, model, Document } from 'mongoose'
 
 interface IEventSchema extends Document {
-    description: string,
-    dayOfWeek: string,
-    createdAt: Date,
-    user: string,
+  description: string
+  dayOfWeek: string
+  createdAt: Date
+  user: string
 }
 
 const EventSchema = new Schema({
   description: {
     type: String,
-    required: [true, 'An event must have a desciption']
+    required: [true, 'An event must have a desciption'],
   },
   dayOfWeek: {
     type: String,
@@ -23,16 +23,16 @@ const EventSchema = new Schema({
         'wednesday',
         'thursday',
         'friday',
-        'saturday'
+        'saturday',
       ],
-      message: 'Insert valid weekdays in lowercase'
-    }
+      message: 'Insert valid weekdays in lowercase',
+    },
   },
   createdAt: { type: Date, default: Date.now() },
   user: {
     type: String,
-    ref: 'User'
-  }
+    ref: 'User',
+  },
 })
 
 export default model<IEventSchema>('Event', EventSchema)

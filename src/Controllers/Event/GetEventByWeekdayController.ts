@@ -10,19 +10,22 @@ export class GetEventByWeekdayController {
     'wednesday',
     'thursday',
     'friday',
-    'saturday'
+    'saturday',
   ]
 
-  async handle (req: Request, res: Response): Promise<Response> {
-    if (!this.weekday.includes((req.query.dayOfWeek) as string)) {
-      throw new BaseError(400, `${req.query.dayOfWeek} is not a valid weekday (remember to pass the value in lowercase).`)
+  async handle(req: Request, res: Response): Promise<Response> {
+    if (!this.weekday.includes(req.query.dayOfWeek as string)) {
+      throw new BaseError(
+        400,
+        `${req.query.dayOfWeek} is not a valid weekday (remember to pass the value in lowercase).`,
+      )
     }
 
     const events = await Event.find({ dayOfWeek: req.query.dayOfWeek })
 
     return res.status(200).json({
       status: 'success',
-      events
+      events,
     })
   }
 }
