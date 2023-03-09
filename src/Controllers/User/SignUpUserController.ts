@@ -4,7 +4,7 @@ import User from '../../Models/UserModel'
 import { sendJWT } from '../Auth/SendJWT'
 
 export class CreateUserController {
-  async handle(req: Request, res: Response): Promise<Response> {
+  async handle (req: Request, res: Response): Promise<Response> {
     const {
       firstName,
       lastName,
@@ -13,12 +13,12 @@ export class CreateUserController {
       country,
       email,
       password,
-      confirmPassword,
+      confirmPassword
     } = req.body
 
     if (password !== confirmPassword) {
       throw new ValidationError(
-        'Validation Error: The password and confirmPassword are not the same',
+        'Validation Error: The password and confirmPassword are not the same'
       )
     }
 
@@ -36,11 +36,8 @@ export class CreateUserController {
       country,
       email,
       password,
-      confirmPassword,
+      confirmPassword
     })
-
-    console.log(newUser)
-
     return sendJWT.handle(newUser, 'User created successfully', 200, res)
   }
 }
