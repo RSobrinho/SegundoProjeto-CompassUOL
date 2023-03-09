@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { ValidationError } from '../../Error/ValidationError'
 import User from '../../Models/UserModel'
-import { sendJWT } from '../../Controllers/Auth/SendJWT'
+import { sendJWT } from '../Auth/SendJWT'
 export class CreateUserController {
   async handle (req: Request, res: Response): Promise<Response> {
     const { firstName, lastName, birthDate, city, country, email, password, confirmPassword } = req.body

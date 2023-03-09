@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { BaseError } from '../../Error/BaseError'
 import Event from '../../Models/EventModel'
 
-export class GetEventById {
+export class GetEventByIdController {
   async handle (req: Request, res: Response): Promise<Response> {
     const event = await Event.findById(req.params.id)
 
@@ -14,3 +14,4 @@ export class GetEventById {
 }
 
 // top
+export const getEventByIdController = new GetEventByIdController()
