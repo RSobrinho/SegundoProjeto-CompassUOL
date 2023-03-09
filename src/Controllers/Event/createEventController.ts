@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { BaseError } from '../../Error/BaseError'
-import Event from '../../Models/EventModel'
+import Event from '../../Models/eventModel'
 
 export class CreateEventController {
   async handle (req: Request, res: Response): Promise<Response> {
