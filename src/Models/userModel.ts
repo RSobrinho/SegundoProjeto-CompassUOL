@@ -12,13 +12,11 @@ interface IUserSchema extends Document {
   confirmPassword: string
   role: string[],
   passwordChangedAt: Date,
-  passwordResetToken: string,
-  passwordResetExpires: Date,
-  changePasswordAfter(): void
+  changedPasswordAfter(): boolean,
+  verifyPass(): Promise<boolean>
 }
 
 const UserSchema = new Schema({
-  _id: Schema.Types.Mixed,
   firstName: String,
   lastName: String,
   birthDate: Date,
@@ -36,8 +34,6 @@ const UserSchema = new Schema({
     default: 'user'
   },
   passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
   events: [
     {
       type: String,
@@ -80,21 +76,5 @@ UserSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
 
   return false
 }
-
-// futuramente pro reset do password
-// UserSchema.methods.createPasswordResetToken = function () {
-//   const resetToken = crypto.randomBytes(32).toString('hex')
-
-//   this.passwordResetToken = crypto
-//     .createHash('sha256')
-//     .update(resetToken)
-//     .digest('hex')
-
-//   console.log({ resetToken }, this.passwordResetToken)
-
-//   this.passwordResetExpires = Date.now() + 10 * 60 * 1000
-
-//   return resetToken
-// }
 
 export default model<IUserSchema>('User', UserSchema)
