@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import { CreateEventrController } from '../Controllers/Event/createEventController'
+import { CreateEventrController } from '../Controllers/Event/CreateEventController'
 import { asyncHandler } from '../Error/Handler'
 
 const router = Router()
