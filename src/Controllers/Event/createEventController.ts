@@ -4,17 +4,17 @@ import Event from '../../Models/eventModel'
 
 export class CreateEventController {
   async handle (req: Request, res: Response): Promise<Response> {
-    const { description, dayOfWeek, createdAt } = req.body
+    const { description, dayOfWeek } = req.body
 
-    const event = Event.findOne({ description })
+    const event = await Event.findOne({ description })
 
-    if (event.description === description && event.dayOfWeek) {
+    if (event && event.description === description && event.dayOfWeek === dayOfWeek) {
       throw new BaseError(409, 'Duplicated event on this day.')
     }
 
-    await Event.save({ description, dayOfWeek, createdAt })
+    const newEvent = await Event.create({ description, dayOfWeek })
 
-    return res.status(201).json({ status: 'Success', message: 'Event added successfully' })
+    return res.status(201).json({ data: newEvent, status: 'Success', message: 'Event added successfully' })
   }
 }
 
