@@ -8,8 +8,26 @@ interface IEventSchema extends Document {
 }
 
 const EventSchema = new Schema({
-  description: String,
-  dayOfWeek: String,
+  description: {
+    type: String,
+    required: [true, 'An event must have a desciption']
+  },
+  dayOfWeek: {
+    type: String,
+    required: [true, 'An event must have a weekday'],
+    enum: {
+      values: [
+        'sunday',
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday'
+      ],
+      message: 'Insert valid weekdays in lowercase'
+    }
+  },
   createdAt: { type: Date, default: Date.now() },
   user: {
     type: String,

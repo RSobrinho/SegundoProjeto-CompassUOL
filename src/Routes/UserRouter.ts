@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import { createUserController } from '../Controllers/User/createUserController'
+import { createUserController } from '../Controllers/User/CreateUserController'
 import { asyncHandler } from '../Error/Handler'
 
 const router = Router()
