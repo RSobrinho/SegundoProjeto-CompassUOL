@@ -1,9 +1,9 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { createUserController } from '../Controllers/User/SignUpUserController'
-// import { authenticationController } from '../Controllers/Auth/AuthenticationController'
+import { authController } from '../Controllers/Auth/AuthController'
 import { asyncHandler } from '../Error/Handler'
 import { signInUserController } from '../Controllers/User/SignInUserController'
-import { deleteMeController } from 'Controllers/User/DeleteMeController'
+import { deleteMeController } from '../Controllers/User/DeleteMeController'
 
 const router = Router()
 
@@ -19,10 +19,17 @@ router.route('/signIn').post(
   })
 )
 
-router.route('/').delete((
+const simpleAuth = asyncHandler(
+  (request: Request, response: Response, next: NextFunction) => {
+    return authController.handle(request, next, ['user', 'admin'])
+  }
+)
+
+router.route('/').delete(
+  simpleAuth,
   asyncHandler((request: Request, response: Response, next: NextFunction) => {
     return deleteMeController.handle(request, response)
   })
-))
+)
 
 export default router
