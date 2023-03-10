@@ -1,9 +1,9 @@
-import { Request, Response } from 'express'
-import { BaseError } from '../../Error/BaseError'
+import { ValidationError } from '../../Error/ValidationError'
+import { NextFunction, Request, Response } from 'express'
 import Event from '../../Models/EventModel'
 
 export class CreateEventController {
-  async handle(req: Request, res: Response): Promise<Response> {
+  async handle (req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     const { description, dayOfWeek } = req.body
 
     const event = await Event.findOne({ description })
@@ -13,15 +13,15 @@ export class CreateEventController {
       event.description === description &&
       event.dayOfWeek === dayOfWeek
     ) {
-      throw new BaseError(409, 'Duplicated event on this day.')
+      return next(new ValidationError('Duplicated event on this day.'))
     }
 
-    const newEvent = await Event.create({ description, dayOfWeek })
+    const newEvent = await Event.create({ description, dayOfWeek, user: req.user._id })
 
     return res.status(201).json({
       data: newEvent,
       status: 'Success',
-      message: 'Event added successfully',
+      message: 'Event added successfully'
     })
   }
 }

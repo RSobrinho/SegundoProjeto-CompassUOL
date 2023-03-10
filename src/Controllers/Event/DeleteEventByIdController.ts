@@ -1,17 +1,16 @@
-import { Request, Response } from 'express'
-import { BaseError } from '../../Error/BaseError'
+import { NextFunction, Request, Response } from 'express'
 import Event from '../../Models/EventModel'
+import { NotFoundError } from '../../Error/NotFoundError'
 
 export class DeleteEventByIdController {
-  async handle(req: Request, res: Response): Promise<Response> {
-    const event = await Event.findById(req.params.id)
+  async handle (req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+    const event = await Event.findOneAndDelete({ _id: req.params.id, user: req.user._id })
     console.log(event)
 
-    if (!event) throw new BaseError(409, 'No event find by this Id.')
-
-    await Event.deleteOne({ _id: req.params.id })
-
-    return res.status(204).end()
+    if (!event) {
+      return next(new NotFoundError('Event with this id'))
+    }
+    return res.status(204).json()
   }
 }
 
