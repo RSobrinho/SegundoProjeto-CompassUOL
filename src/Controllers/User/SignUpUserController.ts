@@ -3,7 +3,7 @@ import { ValidationError } from '../../Error/ValidationError'
 import User from '../../Models/UserModel'
 import { sendJWT } from '../Auth/SendJWT'
 
-export class CreateUserController {
+export class SignUpUserController {
   async handle (req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     const {
       firstName,
@@ -42,4 +42,4 @@ export class CreateUserController {
   }
 }
 
-export const createUserController = new CreateUserController()
+export const signUpUserController = new SignUpUserController()
