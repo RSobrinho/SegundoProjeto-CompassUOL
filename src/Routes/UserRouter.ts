@@ -3,6 +3,7 @@ import { createUserController } from '../Controllers/User/SignUpUserController'
 // import { authenticationController } from '../Controllers/Auth/AuthenticationController'
 import { asyncHandler } from '../Error/Handler'
 import { signInUserController } from '../Controllers/User/SignInUserController'
+import { deleteMeController } from 'Controllers/User/DeleteMeController'
 
 const router = Router()
 
@@ -17,5 +18,11 @@ router.route('/signIn').post(
     return signInUserController.handle(request, response, next)
   })
 )
+
+router.route('/').delete((
+  asyncHandler((request: Request, response: Response, next: NextFunction) => {
+    return deleteMeController.handle(request, response)
+  })
+))
 
 export default router
