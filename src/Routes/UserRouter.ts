@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express'
-import { createUserController } from '../Controllers/User/CreateUserController'
+import { createUserController } from '../Controllers/User/SignUpUserController'
 // import { authenticationController } from '../Controllers/Auth/AuthenticationController'
 import { asyncHandler } from '../Error/Handler'
 import { signInUserController } from '../Controllers/User/SignInUserController'

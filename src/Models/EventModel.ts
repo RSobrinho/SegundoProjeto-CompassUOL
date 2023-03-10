@@ -1,6 +1,6 @@
-import { Schema, model, Document } from 'mongoose'
+import { Schema, model, Document, Types } from 'mongoose'
 
-interface IEventSchema extends Document {
+export interface IEventSchema extends Document {
   description: string
   dayOfWeek: string
   createdAt: Date
@@ -10,7 +10,7 @@ interface IEventSchema extends Document {
 const EventSchema = new Schema({
   description: {
     type: String,
-    required: [true, 'An event must have a desciption'],
+    required: [true, 'An event must have a description']
   },
   dayOfWeek: {
     type: String,
@@ -23,18 +23,25 @@ const EventSchema = new Schema({
         'wednesday',
         'thursday',
         'friday',
-        'saturday',
+        'saturday'
       ],
-      message: 'Insert valid weekdays in lowercase',
-    },
+      message: 'Insert valid weekdays in lowercase'
+    }
   },
   createdAt: { type: Date, default: Date.now() },
   user: {
-    type: String,
-    ref: 'User',
-  },
+    type: Types.ObjectId,
+    ref: 'User'
+  }
+})
+
+EventSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: 'firstName'
+  })
+
+  next()
 })
 
 export default model<IEventSchema>('Event', EventSchema)
-
-// top

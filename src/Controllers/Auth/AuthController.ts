@@ -30,18 +30,9 @@ export class AuthController {
       return next(new AuthError('Please log in to get access.'))
     }
 
-    const { id, iat } = verify(
-      token,
-      process.env.JWT_SECRET,
-      (err, decoded) => {
-        if (err) {
-          return next(new AuthError('Don`t know yet'))
-        }
-        return decoded
-      }
-    ) as unknown as jwtDecoded
+    const decoded = await verify(token, process.env.JWT_SECRET) as jwtDecoded
 
-    const existingUser = await User.findById(id)
+    const existingUser = await User.findById(decoded.id)
 
     if (!existingUser) {
       return next(
@@ -51,7 +42,7 @@ export class AuthController {
       )
     }
 
-    if (existingUser.changedPasswordAfter(iat)) {
+    if (existingUser.changedPasswordAfter(decoded.iat)) {
       return next(
         new AuthError('User recently changed password! Please log in again.')
       )

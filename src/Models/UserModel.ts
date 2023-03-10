@@ -1,6 +1,7 @@
-import { Schema, model, Document } from 'mongoose'
+import { Schema, model, Document, Types } from 'mongoose'
 import { hash, compare } from 'bcrypt'
 import validator from 'validator'
+import { IEventSchema } from './EventModel'
 // import crypto from 'crypto'
 export interface IUserSchema extends Document {
   firstName: string
@@ -28,22 +29,16 @@ const UserSchema = new Schema({
     unique: true,
     lowercase: true,
     required: [true, 'Email is required'],
-    validate: [validator.isEmail, 'Provide a valid email.'],
+    validate: [validator.isEmail, 'Provide a valid email.']
   },
   password: String,
   confirmPassword: String,
   role: {
     type: String,
     enum: ['user', 'admin'],
-    default: 'user',
+    default: 'user'
   },
-  passwordChangedAt: Date,
-  events: [
-    {
-      type: String,
-      ref: 'Event',
-    },
-  ],
+  passwordChangedAt: Date
 })
 
 UserSchema.pre('save', async function (next) {
@@ -64,7 +59,7 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.methods.verifyPass = async function (
   candidatePassword,
-  userPassword,
+  userPassword
 ) {
   return await compare(candidatePassword, userPassword)
 }
@@ -75,7 +70,7 @@ UserSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       this.passwordChangedAt.getTime() / 1000,
-      10,
+      10
     )
 
     return JWTTimestamp < changedTimestamp
