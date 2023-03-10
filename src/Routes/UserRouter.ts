@@ -1,6 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { createUserController } from '../Controllers/User/SignUpUserController'
-// import { authenticationController } from '../Controllers/Auth/AuthenticationController'
 import { asyncHandler } from '../Error/Handler'
 import { signInUserController } from '../Controllers/User/SignInUserController'
 import { updateUserDataController } from '../Controllers/User/UpdateUserDataController'

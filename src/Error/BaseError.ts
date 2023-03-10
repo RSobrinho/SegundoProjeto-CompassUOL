@@ -11,5 +11,3 @@ export class BaseError extends Error {
     Error.captureStackTrace(this)
   }
 }
-
-// top

@@ -1,8 +1,6 @@
 import { Schema, model, Document, Types } from 'mongoose'
 import { hash, compare } from 'bcrypt'
 import validator from 'validator'
-import { IEventSchema } from './EventModel'
-// import crypto from 'crypto'
 export interface IUserSchema extends Document {
   firstName: string
   lastName: string
