@@ -21,6 +21,12 @@ router.route('/signIn').post(
   })
 )
 
+router.route('/updateMe').patch(
+  authController.simpleAuth,
+  asyncHandler((request: Request, response: Response, next: NextFunction) => {
+    return updateUserDataController.handle(request, response, next)
+  })
+)
 
 router.route('/').delete(
   authController.simpleAuth,
