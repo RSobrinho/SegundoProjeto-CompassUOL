@@ -11,3 +11,5 @@ export class DeleteMeController {
     })
   }
 }
+
+export const deleteMeController = new DeleteMeController()
