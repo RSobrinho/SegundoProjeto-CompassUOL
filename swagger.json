@@ -1,32 +1,36 @@
-
 {
-  "openapi": "3.0.0",
+  "openapi": "3.0.3",
   "info": {
-    "title": "Segundo projeto Compass.UOL",
-    "description": "Fazer descrição após receber pdf do desafio",
+    "title": "Second Challenge - Compass Planner ",
+    "description": "This is a planner where you can organize your week and tasks the way you want it.",
     "termsOfService": "",
     "contact": {
       "name": "",
       "url": "",
       "email": ""
-      },
-      "version": "1.0.0"
     },
-    "servers": [
-      {
-        "url": "http://localhost:8082/api/v1/",
-        "description": "URL para testar API localmente "
-      },
-      {
-        "url": "",
-        "description": "URL da API hospedada no AWS Elastic Beanstalk (em breve)"
-      }
-    ],
-    "paths": {
-      },
-    "components": {
-      "schemas": {
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8082/api/v1/",
+      "description": "URL to test locally"
+    },
+    {
+      "url": "",
+      "description": "PROD URL"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "/signUp": {
+        "post": {
+          "summary": "Sign up a new user."
+        }
       }
     }
-
+  },
+  "components": {
+    "schemas": {}
   }
+}
