@@ -7,19 +7,12 @@ import { deleteEventByWeekdayController } from '../Controllers/Event/DeleteEvent
 import { authController } from '../Controllers/Auth/AuthController'
 
 import { asyncHandler } from '../Error/Handler'
-import { request } from 'http'
 
 const router = Router()
 
 const simpleAuth = asyncHandler(
   (request: Request, response: Response, next: NextFunction) => {
     return authController.handle(request, next, ['user', 'admin'])
-  }
-)
-
-const adminAuth = asyncHandler(
-  (request: Request, response: Response, next: NextFunction) => {
-    return authController.handle(request, next, ['admin'])
   }
 )
 

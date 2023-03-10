@@ -5,6 +5,7 @@ export interface IEventSchema extends Document {
   dayOfWeek: string
   createdAt: Date
   user: string
+  dateTime: Date
 }
 
 const EventSchema = new Schema({
@@ -29,6 +30,10 @@ const EventSchema = new Schema({
     }
   },
   createdAt: { type: Date, default: Date.now() },
+  dateTime: {
+    type: Date,
+    required: [true, 'An event must have a date']
+  },
   user: {
     type: Types.ObjectId,
     ref: 'User'
