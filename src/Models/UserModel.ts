@@ -18,28 +18,32 @@ export interface IUserSchema extends Document {
   verifyPass(candidatePassword, userPassword): Promise<boolean>
 }
 
-const UserSchema = new Schema({
-  firstName: String,
-  lastName: String,
-  birthDate: Date,
-  city: String,
-  country: String,
-  email: {
-    type: String,
-    unique: true,
-    lowercase: true,
-    required: [true, 'Email is required'],
-    validate: [validator.isEmail, 'Provide a valid email.']
+const UserSchema = new Schema(
+  {
+    firstName: String,
+    lastName: String,
+    birthDate: Date,
+    city: String,
+    country: String,
+    email: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      required: [true, 'Email is required'],
+      validate: [validator.isEmail, 'Provide a valid email.'],
+    },
+    password: String,
+    confirmPassword: String,
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user',
+      select: false,
+    },
+    passwordChangedAt: Date,
   },
-  password: String,
-  confirmPassword: String,
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
-  },
-  passwordChangedAt: Date
-})
+  { versionKey: false },
+)
 
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next()
@@ -59,7 +63,7 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.methods.verifyPass = async function (
   candidatePassword,
-  userPassword
+  userPassword,
 ) {
   return await compare(candidatePassword, userPassword)
 }
@@ -70,7 +74,7 @@ UserSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       this.passwordChangedAt.getTime() / 1000,
-      10
+      10,
     )
 
     return JWTTimestamp < changedTimestamp
