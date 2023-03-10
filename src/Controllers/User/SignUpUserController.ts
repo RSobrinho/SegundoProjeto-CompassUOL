@@ -1,10 +1,10 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { ValidationError } from '../../Error/ValidationError'
 import User from '../../Models/UserModel'
 import { sendJWT } from '../Auth/SendJWT'
 
 export class CreateUserController {
-  async handle (req: Request, res: Response): Promise<Response> {
+  async handle (req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     const {
       firstName,
       lastName,
@@ -17,15 +17,15 @@ export class CreateUserController {
     } = req.body
 
     if (password !== confirmPassword) {
-      throw new ValidationError(
+      return next(new ValidationError(
         'Validation Error: The password and confirmPassword are not the same'
-      )
+      ))
     }
 
     const existingUser = await User.findOne({ email })
 
     if (existingUser) {
-      throw new ValidationError('Validation Error: This email already exists')
+      return next(new ValidationError('Validation Error: This email already exists'))
     }
 
     const newUser = await User.create({
