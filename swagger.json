@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.0.0",
   "info": {
     "title": "Second Challenge - Compass Planner ",
     "description": "This is a planner where you can organize your week and tasks the way you want it.",
@@ -22,15 +22,89 @@
     }
   ],
   "paths": {
-    "/users": {
-      "/signUp": {
-        "post": {
-          "summary": "Sign up a new user."
+    "/signUp": {
+      "post": {
+        "summary": "Sign up a new user.",
+        "description": "This route is responsible for user sign up.",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "firstName": "Gabriela",
+                    "lastName": "Medeiros",
+                    "birthDate": "2004-05-09",
+                    "city": "Campo Grande",
+                    "country": "Brazil",
+                    "email": "gabi@teste.com",
+                    "password": "1234",
+                    "confirmPassword": "1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "The password and confirmPassword are not the same OR This email already exists"
+          },
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": 200,
+                    "token": "JWT_TOKEN",
+                    "message": "User created successfully"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
   },
   "components": {
-    "schemas": {}
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "confirmPassword": {
+            "type": "string"
+          }
+        }
+      }
+    }
   }
 }
