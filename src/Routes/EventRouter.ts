@@ -9,43 +9,34 @@ import { asyncHandler } from '../Error/Handler'
 
 const router = Router()
 
-const simpleAuth = asyncHandler(
-  (request: Request, response: Response, next: NextFunction) => {
-    return authController.handle(request, next, ['user', 'admin'])
-  }
-)
-
-const adminAuth = asyncHandler(
-  (request: Request, response: Response, next: NextFunction) => {
-    return authController.handle(request, next, ['admin'])
-  }
-)
-
-router.route('/').post(
-  simpleAuth,
-  asyncHandler((request: Request, response: Response, next: NextFunction) => {
-    return createEventController.handle(request, response, next)
-  })
-
-).get(
-  simpleAuth,
-  asyncHandler((request: Request, response: Response, next: NextFunction) => {
-    return getAllEventsController.handle(request, response, next)
-  })
-)
+router
+  .route('/')
+  .post(
+    authController.simpleAuth,
+    asyncHandler((request: Request, response: Response, next: NextFunction) => {
+      return createEventController.handle(request, response, next)
+    }),
+  )
+  .get(
+    authController.simpleAuth,
+    asyncHandler((request: Request, response: Response, next: NextFunction) => {
+      return getAllEventsController.handle(request, response, next)
+    }),
+  )
 
 router
   .route('/:id')
   .delete(
-    simpleAuth,
+    authController.simpleAuth,
     asyncHandler((request: Request, response: Response, next: NextFunction) => {
       return deleteEventByIdController.handle(request, response, next)
-    })
-  ).get(
-    simpleAuth,
+    }),
+  )
+  .get(
+    authController.simpleAuth,
     asyncHandler((request: Request, response: Response, next: NextFunction) => {
       return getEventByIdController.handle(request, response, next)
-    })
+    }),
   )
 
 export default router
