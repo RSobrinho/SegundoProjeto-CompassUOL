@@ -1,8 +1,10 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { createUserController } from '../Controllers/User/SignUpUserController'
-import { authController } from '../Controllers/Auth/AuthController'
+// import { authenticationController } from '../Controllers/Auth/AuthenticationController'
 import { asyncHandler } from '../Error/Handler'
 import { signInUserController } from '../Controllers/User/SignInUserController'
+import { updateUserDataController } from '../Controllers/User/UpdateUserDataController'
+import { authController } from '../Controllers/Auth/AuthController'
 import { deleteMeController } from '../Controllers/User/DeleteMeController'
 
 const router = Router()
@@ -19,14 +21,9 @@ router.route('/signIn').post(
   })
 )
 
-const simpleAuth = asyncHandler(
-  (request: Request, response: Response, next: NextFunction) => {
-    return authController.handle(request, next, ['user', 'admin'])
-  }
-)
 
 router.route('/').delete(
-  simpleAuth,
+  authController.simpleAuth,
   asyncHandler((request: Request, response: Response, next: NextFunction) => {
     return deleteMeController.handle(request, response)
   })
