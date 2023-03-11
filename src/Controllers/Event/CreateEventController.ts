@@ -6,7 +6,6 @@ export class CreateEventController {
   async handle (req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     const { description, dayOfWeek } = req.body
     const dateTime = new Date(req.body.dateTime)
-    console.log(dateTime)
 
     const event = await Event.findOne({ description })
 
