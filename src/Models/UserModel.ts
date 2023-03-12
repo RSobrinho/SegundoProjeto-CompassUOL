@@ -38,7 +38,6 @@ const UserSchema = new Schema(
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
-      select: false,
     },
     passwordChangedAt: Date,
   },
