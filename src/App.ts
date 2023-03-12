@@ -1,6 +1,6 @@
 import express from 'express'
 import swaggerUi from 'swagger-ui-express'
-import swaggerDocs from '../swagger.json'
+import swaggerDocs from './swagger.json'
 import mongoose from 'mongoose'
 import BaseRouter from './Routes/BaseRouter'
 import UserRouter from './Routes/UserRouter'
@@ -34,6 +34,7 @@ class App {
   }
 
   private errorMiddlewares() {
+    // this.express.use(errorLogging)
     this.express.use(errorResponse)
   }
 

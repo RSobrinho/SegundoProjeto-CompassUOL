@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  mongo:
+    container_name: mongo-testdb
+    image: mongo:latest
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    container_name: mongo-express-testdb
+    image: mongo-express:latest
+    ports:
+      - 8081:8081
