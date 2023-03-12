@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",                                  
     "module": "commonjs",                                
-    "outDir": "./dist",
+    "outDir": "./build",
     "sourceMap": true,
     "rootDir": "./",                                  
     "moduleResolution": "node",                       

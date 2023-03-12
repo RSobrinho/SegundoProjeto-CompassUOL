@@ -2,7 +2,7 @@
 FROM node:16
 
 # Diretório de trabalho
-WORKDIR /usr/src/
+WORKDIR ./
 
 # Copia os arquivos de configuração
 COPY package*.json tsconfig*.json ./
@@ -15,6 +15,8 @@ COPY ./src ./src
 
 # Compila o TypeScript
 RUN npm run build
+
+COPY ./dist ./dist
 
 # Expõe a porta que o servidor está escutando
 EXPOSE 8080

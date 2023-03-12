@@ -4,12 +4,11 @@
   "description": "Second Project for Compass UOL - Internship Program",
   "main": "server.js",
   "scripts": {
-    "start": "node dist/src/server.js",
+    "start": "node ./build/src/server.js",
     "dev": "tsnd --transpile-only --respawn --ignore-watch node_modules src/server.ts",
     "build": "tsc",
     "lint:fix": "eslint --fix --ext .ts .",
-    "test": "vitest",
-    "startjs": "node ../dist/src/server.js"
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
