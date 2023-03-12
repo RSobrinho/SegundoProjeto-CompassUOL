@@ -9,7 +9,7 @@
     "build": "tsc",
     "lint:fix": "eslint --fix --ext .ts .",
     "test": "vitest",
-    "startjs": "node dist/src/server.js"
+    "startjs": "node ../dist/src/server.js"
   },
   "repository": {
     "type": "git",
