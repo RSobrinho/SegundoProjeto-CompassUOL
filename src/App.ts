@@ -41,7 +41,7 @@ class App {
   private database () {
     mongoose.set('strictQuery', false)
     mongoose
-      .connect(process.env.DATABASE_URL)
+      .connect(process.env.DATABASE_LOCAL_URL)
       .then(() => console.log('DB connection established'))
   }
 
