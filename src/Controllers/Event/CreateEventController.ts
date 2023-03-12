@@ -7,7 +7,7 @@ export class CreateEventController {
     const { description, dayOfWeek } = req.body
     const dateTime = new Date(req.body.dateTime)
 
-    const event = await Event.findOne({ description })
+    const event = await Event.findOne({ description, user: req.user._id })
 
     if (
       event &&
