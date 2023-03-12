@@ -6,7 +6,7 @@
     "sourceMap": true,
     "rootDir": "./",                                  
     "moduleResolution": "node",                       
-    "baseUrl": "./src",                                 
+    "baseUrl": "./",                                 
     "resolveJsonModule": true,                      
     "esModuleInterop": true,                             
     "forceConsistentCasingInFileNames": true,            
