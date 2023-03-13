@@ -11,7 +11,7 @@ import { join } from 'path'
 
 class App {
   public express: express.Application
-  public constructor () {
+  public constructor() {
     config()
 
     this.express = express()
@@ -22,30 +22,30 @@ class App {
     this.errorMiddlewares()
   }
 
-  private settings () {
+  private settings() {
     this.express.set('view engine', 'pug')
     this.express.set('views', join(__dirname, 'views'))
   }
 
-  private middlewares () {
+  private middlewares() {
     this.express.use(express.json())
     this.express.use(express.static(join(__dirname, 'public')))
     this.express.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
   }
 
-  private errorMiddlewares () {
+  private errorMiddlewares() {
     // this.express.use(errorLogging)
     this.express.use(errorResponse)
   }
 
-  private database () {
+  private database() {
     mongoose.set('strictQuery', false)
     mongoose
       .connect(process.env.DATABASE_URL)
       .then(() => console.log('DB connection established'))
   }
 
-  private routes () {
+  private routes() {
     this.express.use('/', BaseRouter)
     this.express.use('/api/v1/users', UserRouter)
     this.express.use('/api/v1/events', EventRouter)
@@ -53,5 +53,3 @@ class App {
 }
 
 export default new App().express
-
-// top

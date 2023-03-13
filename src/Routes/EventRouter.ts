@@ -6,6 +6,7 @@ import { deleteEventByIdController } from '../Controllers/Event/DeleteEventByIdC
 import { deleteEventByWeekdayController } from '../Controllers/Event/DeleteEventByWeekdayController'
 import { authController } from '../Controllers/Auth/AuthController'
 import { asyncHandler } from '../Error/Handler'
+import { getFilteredEventsController } from '../Controllers/Event/GetFilteredEvents'
 
 const router = Router()
 
@@ -29,6 +30,13 @@ router
       return deleteEventByWeekdayController.handle(request, response, next)
     }),
   )
+
+router.route('/filterByDate').get(
+  authController.simpleAuth,
+  asyncHandler((request: Request, response: Response, next: NextFunction) => {
+    return getFilteredEventsController.handle(request, response, next)
+  }),
+)
 
 router
   .route('/:id')

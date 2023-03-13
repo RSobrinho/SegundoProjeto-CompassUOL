@@ -2,7 +2,7 @@ import { Schema, model, Document } from 'mongoose'
 import { hash, compare } from 'bcrypt'
 import validator from 'validator'
 import crypto from 'crypto'
-// import crypto from 'crypto'
+
 export interface IUserSchema extends Document {
   firstName: string
   lastName: string

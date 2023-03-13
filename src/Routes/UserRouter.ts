@@ -14,13 +14,13 @@ const router = Router()
 router.route('/signUp').post(
   asyncHandler((request: Request, response: Response, next: NextFunction) => {
     return signUpUserController.handle(request, response, next)
-  })
+  }),
 )
 
 router.route('/signIn').post(
   asyncHandler((request: Request, response: Response, next: NextFunction) => {
     return signInUserController.handle(request, response, next)
-  })
+  }),
 )
 
 router.route('/resetPassword/:token').post(
@@ -39,14 +39,14 @@ router.route('/updateMe').patch(
   authController.simpleAuth,
   asyncHandler((request: Request, response: Response, next: NextFunction) => {
     return updateUserDataController.handle(request, response, next)
-  })
+  }),
 )
 
 router.route('/').delete(
   authController.simpleAuth,
   asyncHandler((request: Request, response: Response, next: NextFunction) => {
     return deleteMeController.handle(request, response)
-  })
+  }),
 )
 
 export default router
