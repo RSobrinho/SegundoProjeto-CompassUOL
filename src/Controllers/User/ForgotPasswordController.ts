@@ -9,16 +9,12 @@ export class ForgotPasswordController {
   public async handle (req: Request, res: Response, next: NextFunction) {
     const user = await User.findOne({ email: req.body.email })
 
-    console.log(req.body.email)
-
     if (!user) {
       return next(new NotFoundError('User'))
     }
 
     const resetToken = user.createPasswordResetToken()
     await user.save({ validateBeforeSave: false })
-
-    console.log(user)
 
     const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`
 
