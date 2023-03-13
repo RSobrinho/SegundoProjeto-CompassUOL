@@ -187,6 +187,105 @@
         }
       }
     },
+    "/users/forgotPassword": {
+      "post": {
+        "summary": "Get email to reset your password.",
+        "description": "This route is responsible for sending an email if the user forgot his password.",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "email": "f71356dbb0-f132a5@inbox.mailtrap.io"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "404": {
+            "description": "User not found!"
+          },
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": "success",
+                    "message": "A password reset link was sent to your email."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/resetPassword/{resetToken}": {
+      "post": {
+        "summary": "Reset your password",
+        "description": "This route is responsible for resetting the user password.",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "resetToken",
+            "in": "path",
+            "description": "Reset token",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "password": "1234",
+                    "confirmPassword": "1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "422": {
+            "description": "Password and confirmPassword are not the same"
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "status": "success",
+                    "token": "JWT_TOKEN",
+                    "message": "Password changed successfully"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/events/": {
       "post": {
         "summary": "Create new event",
@@ -377,6 +476,48 @@
         "responses": {
           "204": {
             "description": "Event deleted!"
+          }
+        }
+      }
+    },
+    "/events/filterByDate": {
+      "get": {
+        "summary": "Get all events between a specific date range.",
+        "description": "This route is responsible for getting all events between a specific date range.",
+        "tags": [
+          "Event"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Event startDate",
+            "required": true
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "Event endDate",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Event"
+                  }
+                }
+              }
+            }
           }
         }
       }
