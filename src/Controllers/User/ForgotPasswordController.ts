@@ -9,6 +9,8 @@ export class ForgotPasswordController {
   public async handle (req: Request, res: Response, next: NextFunction) {
     const user = await User.findOne({ email: req.body.email })
 
+    console.log(req.body.email)
+
     if (!user) {
       return next(new NotFoundError('User'))
     }

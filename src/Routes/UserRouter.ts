@@ -35,10 +35,10 @@ router.route('/forgotPassword').post(
   })
 )
 
-router.route('/updateMe').patch(
+router.route('/').patch(
   authController.simpleAuth,
   asyncHandler((request: Request, response: Response, next: NextFunction) => {
-    return updateUserDataController.handle(request, response, next)
+    return updateUserDataController.handle(request, response)
   })
 )
 
