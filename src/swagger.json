@@ -39,6 +39,54 @@
             "description": "User deleted!"
           }
         }
+      },
+      "patch": {
+        "summary": "Update your account.",
+        "description": "This route is responsible for updating your user account.",
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "firstName": "Gabriela",
+                    "lastName": "Medeiros",
+                    "birthDate": "2004-05-09",
+                    "city": "Campo Grande",
+                    "country": "Brazil",
+                    "email": "gabi@teste.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "422": {
+            "description": "This route is not responsible for updating your password!"
+          },
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/users/signUp": {
@@ -130,56 +178,6 @@
                     "token": "JWT_TOKEN",
                     "message": "User logged in successfully"
                   }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/updateMe": {
-      "patch": {
-        "summary": "Update your account.",
-        "description": "This route is responsible for updating your user account.",
-        "tags": [
-          "User"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              },
-              "examples": {
-                "user": {
-                  "value": {
-                    "firstName": "Gabriela",
-                    "lastName": "Medeiros",
-                    "birthDate": "2004-05-09",
-                    "city": "Campo Grande",
-                    "country": "Brazil",
-                    "email": "gabi@teste.com"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "422": {
-            "description": "This route is not responsible for updating your password!"
-          },
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/User"
                 }
               }
             }
