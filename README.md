@@ -80,7 +80,7 @@ Return events with date range filter
 -------------------------
 
 ```http
-  GET /api/v1/events?startDate={startDate}&endDate={endDate}
+  GET /api/v1/events/filterByDate?startDate={startDate}&endDate={endDate}
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
