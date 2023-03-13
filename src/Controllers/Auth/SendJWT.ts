@@ -12,6 +12,8 @@ class SendJWT {
       expiresIn: process.env.JWT_EXPIRES_IN
     })
 
+    console.log(process.env.JWT_EXPIRES_IN)
+
     user.password = undefined
 
     return res.status(statusCode).json({ status: 'success', token, message })
