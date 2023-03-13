@@ -6,6 +6,8 @@ import { signInUserController } from '../Controllers/User/SignInUserController'
 import { updateUserDataController } from '../Controllers/User/UpdateUserDataController'
 import { authController } from '../Controllers/Auth/AuthController'
 import { deleteMeController } from '../Controllers/User/DeleteMeController'
+import { resetPasswordController } from '../Controllers/User/ResetPasswordController'
+import { forgotPasswordController } from '../Controllers/User/ForgotPasswordController'
 
 const router = Router()
 
@@ -18,6 +20,18 @@ router.route('/signUp').post(
 router.route('/signIn').post(
   asyncHandler((request: Request, response: Response, next: NextFunction) => {
     return signInUserController.handle(request, response, next)
+  })
+)
+
+router.route('/resetPassword/:token').post(
+  asyncHandler((request: Request, response: Response, next: NextFunction) => {
+    return resetPasswordController.handle(request, response, next)
+  })
+)
+
+router.route('/forgotPassword').post(
+  asyncHandler((request: Request, response: Response, next: NextFunction) => {
+    return forgotPasswordController.handle(request, response, next)
   })
 )
 
