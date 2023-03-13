@@ -5,24 +5,24 @@ import crypto from 'crypto'
 config()
 
 interface ITestEvent {
-  description?: string,
-  dayOfWeek?: string,
-  createdAt: Date,
-  user: string,
+  description?: string
+  dayOfWeek?: string
+  createdAt: Date
+  user: string
   dateTime: string
 }
 
 class MyTestFeatures {
-  public getRandomInt (): number {
+  public getRandomInt(): number {
     return Math.floor(Math.random() * 100001) // number between 0 and 10000
   }
 
-  public getRandomDate (): string {
+  public getRandomDate(): string {
     const date = new Date()
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
   }
 
-  public randomDate (start = new Date('2020-01-01'), end = new Date()) {
+  public randomDate(start = new Date('2020-01-01'), end = new Date()) {
     return new Date(+start + Math.random() * ((end as any) - (start as any)))
   }
 }
@@ -42,12 +42,13 @@ describe('User', async () => {
     dayOfWeek: 'sunday',
     createdAt: new Date(),
     user: '640f39b715cb70cd1a3a5168',
-    dateTime: testFeatures.getRandomDate()
-
+    dateTime: testFeatures.getRandomDate(),
   }
 
   beforeAll(async () => {
-    const res = await request(url).post(userRoute + '/signIn').send({ email: 'testetopttt@gmail.com', password: '123' })
+    const res = await request(url)
+      .post(userRoute + '/signIn')
+      .send({ email: 'testetopttt@gmail.com', password: '123' })
 
     authToken = res.body.token
 
@@ -55,8 +56,10 @@ describe('User', async () => {
   })
 
   it('should be able to create an event', async () => {
-    const res = await request(url).post(eventRoute + '/').send(reqBody).set('Authorization', `Bearer ${authToken}`)
+    const res = await request(url)
+      .post(eventRoute + '/')
+      .send(reqBody)
+      .set('Authorization', `Bearer ${authToken}`)
     expect(res.status).toBe(201)
   })
-  // not finished
 })

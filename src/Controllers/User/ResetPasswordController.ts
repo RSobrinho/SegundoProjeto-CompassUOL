@@ -6,12 +6,18 @@ import { NotFoundError } from '../../Error/NotFoundError'
 import { sendJWT } from '../Auth/SendJWT'
 
 export class ResetPasswordController {
-  async handle (req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+  async handle(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response | void> {
     const resetToken = req.params.token
     let { password, confirmPassword } = req.body
 
     if (password !== confirmPassword) {
-      return next(new ValidationError('Password and confirmPassword are not the same'))
+      return next(
+        new ValidationError('Password and confirmPassword are not the same'),
+      )
     } else {
       confirmPassword = undefined
     }
@@ -23,10 +29,8 @@ export class ResetPasswordController {
 
     const user = await User.findOne({
       passwordResetToken: hashedPassResetToken,
-      passwordResetExpires: { $gt: Date.now() }
+      passwordResetExpires: { $gt: Date.now() },
     })
-
-    console.log(user)
 
     if (!user) {
       throw new NotFoundError('user')
@@ -36,8 +40,6 @@ export class ResetPasswordController {
     user.passwordResetToken = null
     user.passwordResetExpires = null
     user.passwordChangedAt = new Date()
-
-    console.log(user)
 
     await user.save({ validateBeforeSave: false })
 

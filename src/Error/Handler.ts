@@ -29,7 +29,6 @@ export const errorResponse = (
   next(err)
 }
 
-// se n me engano, n está funcional ainda, não arrumei sipa
 export const errorLogging = (err, req: Request, next: NextFunction) => {
   const customError = !(
     err.constructor.name === 'NodeError' ||
@@ -45,5 +44,3 @@ export const errorLogging = (err, req: Request, next: NextFunction) => {
 
   next()
 }
-
-// top

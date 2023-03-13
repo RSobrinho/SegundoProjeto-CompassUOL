@@ -34,7 +34,6 @@ class App {
   }
 
   private errorMiddlewares() {
-    // this.express.use(errorLogging)
     this.express.use(errorResponse)
   }
 
