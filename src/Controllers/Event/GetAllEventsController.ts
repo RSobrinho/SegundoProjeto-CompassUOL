@@ -1,11 +1,15 @@
 import { NextFunction, Request, Response } from 'express'
 import { NotFoundError } from '../../Error/NotFoundError'
+import { getEventByWeekdayController } from './GetEventByWeekdayController'
 import { getFilteredEventsController } from './GetFilteredEvents'
 import Event from '../../Models/EventModel'
 
 export class GetAllEventsController {
 
   async handle (req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+    if (req.query.dayOfWeek) {
+      return getEventByWeekdayController.handle(req, res, next)
+    }
     if (req.query.startDate || req.query.endDate) {
       return getFilteredEventsController.handle(req, res, next)
     }
