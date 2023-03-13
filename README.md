@@ -185,6 +185,7 @@ Features
 - [x] Get all events Route
 - [x] Get event by id Route
 - [x] Get event by weekday Route
+- [x] Get events with date range filter Route
 - [x] Create new event Route
 - [x] User sign up Route
 - [x] User sign in Route
