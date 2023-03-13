@@ -1,5 +1,4 @@
-import e, { NextFunction, Request, Response } from 'express'
-import { NotFoundError } from '../../Error/NotFoundError'
+import { NextFunction, Request, Response } from 'express'
 import Event from '../../Models/EventModel'
 
 class GetFilteredEventsController {
@@ -16,15 +15,11 @@ class GetFilteredEventsController {
       filteredObject = {
         $gte: startDate
       }
-    }
-
-    else if (!req.query.startDate || req.query.endDate) {
+    } else if (!req.query.startDate || req.query.endDate) {
       filteredObject = {
         $lte: endDate
       }
-    }
-
-    else if (req.query.startDate || req.query.endDate) {
+    } else if (req.query.startDate || req.query.endDate) {
       filteredObject = {
         $gte: startDate,
         $lte: endDate

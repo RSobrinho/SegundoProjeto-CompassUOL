@@ -16,8 +16,6 @@ export class ForgotPasswordController {
     const resetToken = user.createPasswordResetToken()
     await user.save({ validateBeforeSave: false })
 
-    console.log(user)
-
     const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`
 
     const message = `Forgot your password? Submit a PATCH request on this link: ${resetURL}`

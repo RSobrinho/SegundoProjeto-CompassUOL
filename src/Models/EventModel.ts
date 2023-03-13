@@ -12,7 +12,7 @@ const EventSchema = new Schema(
   {
     description: {
       type: String,
-      required: [true, 'An event must have a description'],
+      required: [true, 'An event must have a description']
     },
     dayOfWeek: {
       type: String,
@@ -25,28 +25,28 @@ const EventSchema = new Schema(
           'wednesday',
           'thursday',
           'friday',
-          'saturday',
+          'saturday'
         ],
-        message: 'Insert valid weekdays in lowercase',
-      },
+        message: 'Insert valid weekdays in lowercase'
+      }
     },
     createdAt: { type: Date, default: Date.now() },
     dateTime: {
       type: Date,
-      required: [true, 'An event must have a date'],
+      required: [true, 'An event must have a date']
     },
     user: {
       type: Types.ObjectId,
-      ref: 'User',
-    },
+      ref: 'User'
+    }
   },
-  { versionKey: false },
+  { versionKey: false }
 )
 
 EventSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'user',
-    select: 'firstName',
+    select: 'firstName'
   })
 
   next()

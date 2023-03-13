@@ -3,32 +3,21 @@ import { ValidationError } from '../../Error/ValidationError'
 import { NextFunction, Request, Response } from 'express'
 
 export class UpdateUserDataController {
-  async handle(
+  async handle (
     req: Request,
-    res: Response,
-    next: NextFunction,
+    res: Response
   ): Promise<Response | void> {
-    if (req.body.password || req.body.confirmPassword) {
-      return next(
-        new ValidationError(
-          'This route is not responsible for updating your password!',
-        ),
-      )
-    }
+    const { firstName, lastName, birthDate, city, country, email, password } = req.body
 
-    const { firstName, lastName, birthDate, city, country, email } = req.body
-
-    const userUpdated = await UserModel.findByIdAndUpdate(
+    await UserModel.findByIdAndUpdate(
       req.user.id,
-      { firstName, lastName, birthDate, city, country, email },
-      { new: true, runValidators: true },
+      { firstName, lastName, birthDate, city, country, email, password },
+      { new: true, runValidators: true }
     )
 
     return res.status(200).json({
       status: 'Success',
-      data: {
-        user: userUpdated,
-      },
+      message: 'User data updated successfully'
     })
   }
 }
