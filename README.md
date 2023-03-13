@@ -76,6 +76,18 @@ Return all weekday events
 | :---------- | :--------- | :------------------------------------------ |
 | `dayOfTheWeek`      | `string` | **Required**. (sunday, monday, tuesday, wednesday, thursday, friday or saturday) |
 
+Return events with date range filter
+-------------------------
+
+```http
+  GET /api/v1/events?startDate={startDate}&endDate={endDate}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `startDate`      | `Date` | **Optional**. (Ex: 2023-05-12T21:28:12Z) |
+| `endDate`      | `Date` | **Optional**. (Ex: 2023-05-12T21:28:12Z) |
+
 Create new event
 ----------------
 
@@ -185,6 +197,11 @@ Specifications
 ### Get Events by Weekday Route 
 - In this route the weekday is passed as a query param, there's a validation to see if there is a query param, otherwise it will call the getAll method. 
 - The response brings all upcoming events on that weekday.
+### Get Events with Date Range Filter Route 
+- In this route, two dates can be passed by the query params:
+- startDate: Will get the events that happens after of durign that dateTime
+- endDate: Will get the events that happens before of durign that dateTime
+- Both startDate and endDate are optional, meaning you can pass one or both of the params in the query 
 ### Create New Event Route
 - UUID v4 was used because it generates a random uuid
 
