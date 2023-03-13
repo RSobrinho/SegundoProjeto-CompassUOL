@@ -5,5 +5,3 @@ export class ValidationError extends BaseError {
     super(422, message)
   }
 }
-
-// top
