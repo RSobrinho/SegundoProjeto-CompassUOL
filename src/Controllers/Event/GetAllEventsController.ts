@@ -5,13 +5,13 @@ import { getFilteredEventsController } from './GetFilteredEvents'
 import Event from '../../Models/EventModel'
 
 export class GetAllEventsController {
-
-  async handle (req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+  async handle(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response | void> {
     if (req.query.dayOfWeek) {
       return getEventByWeekdayController.handle(req, res, next)
-    }
-    if (req.query.startDate || req.query.endDate) {
-      return getFilteredEventsController.handle(req, res, next)
     }
 
     const events = await Event.find({ user: req.user._id })
