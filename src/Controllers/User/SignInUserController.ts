@@ -2,7 +2,7 @@ import User from '../../Models/UserModel'
 import { ValidationError } from '../../Error/ValidationError'
 import { NextFunction, Request, Response } from 'express'
 import { sendJWT } from '../Auth/SendJWT'
-import { UserEntity } from '../../Entities/User/UserEntity'
+import { UserEntity } from '../../Entities/UserEntity'
 export class SignInUserController {
   async handle (req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     const { email, password } = req.body
