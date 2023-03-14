@@ -4,15 +4,15 @@ import { validator } from '../Utils/Validator'
 
 export const EventEntityValidator = z.object({
   id: z.string().uuid(),
-  description: z.string().min(12),
-  createdAt: z.string().datetime().default(`${new Date()}`),
+  description: z.string().min(20),
+  createdAt: z.date(),
   user: z.string().uuid(),
-  dateTime: z.string().datetime()
+  dateTime: z.date()
 })
 
 export type IEventsEntityProps = z.infer<typeof EventEntityValidator>
 
-export class UserEntity {
+export class EventEntity {
   private props: IEventsEntityProps
 
   constructor (props: IEventsEntityProps) {
@@ -21,6 +21,8 @@ export class UserEntity {
     const errors = validator.validate(EventEntityValidator, this.props)
 
     if (errors) {
+      console.log(errors)
+
       throw new ValidationError('Zod validation errors', errors)
     }
   }

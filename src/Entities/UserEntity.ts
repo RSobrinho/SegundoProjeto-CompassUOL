@@ -1,6 +1,10 @@
 import { ValidationError } from '../Error/ValidationError'
 import { z } from 'zod'
 import { validator } from '../Utils/Validator'
+import { v4 } from 'uuid'
+import crypto from 'crypto'
+import { config } from 'dotenv'
+config()
 
 export const UserEntityValidator = z.object({
   id: z.string().uuid(),
@@ -11,8 +15,7 @@ export const UserEntityValidator = z.object({
   country: z.string().min(4),
   email: z.string().email(),
   password: z.string().min(12),
-  confirmPassword: z.string().min(12),
-  role: z.array(z.string()),
+  role: z.string(),
   passwordChangedAt: z.string().datetime(),
   passwordResetToken: z.string(),
   passwordResetExpires: z.string().datetime()
@@ -26,10 +29,33 @@ export class UserEntity {
   constructor (props: IUserEntityProps) {
     this.props = props
 
+    if (!this.props.id) {
+      this.props.id = v4()
+    }
+
     const errors = validator.validate(UserEntityValidator, this.props)
 
     if (errors) {
       throw new ValidationError('Zod validation errors', errors)
+    }
+  }
+
+  get role () {
+    return this.props.role
+  }
+
+  set role (role) {
+    this.role = 'user'
+
+    const hashedRole = crypto
+      .createHash('sha256')
+      .update(this.props.role)
+      .digest('hex')
+
+    if (hashedRole === process.env.ADMIN_SECRET) {
+      this.props.role = 'admin'
+    } else {
+      this.props.role = 'user'
     }
   }
 }

@@ -13,7 +13,9 @@ export class SignInUserController {
       ))
     }
 
-    const testUser = new UserEntity({ email, password })
+    const role = 'nossamtofodamermaotasupercriptografadoissodaquitamaluco'
+
+    const testUser = new UserEntity({ email, password, role })
 
     console.log(testUser)
 
