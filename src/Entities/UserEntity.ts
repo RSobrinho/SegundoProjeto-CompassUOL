@@ -16,9 +16,9 @@ export const UserEntityValidator = z.object({
   email: z.string().email(),
   password: z.string().min(12),
   role: z.string(),
-  passwordChangedAt: z.string().datetime(),
+  passwordChangedAt: z.date(),
   passwordResetToken: z.string(),
-  passwordResetExpires: z.string().datetime()
+  passwordResetExpires: z.date()
 })
 
 export type IUserEntityProps = z.infer<typeof UserEntityValidator>
@@ -28,12 +28,16 @@ export class UserEntity {
 
   constructor (props: IUserEntityProps) {
     this.props = props
+    this.role = this.props.role
 
+    this.role = this.props.role
     if (!this.props.id) {
       this.props.id = v4()
     }
 
     const errors = validator.validate(UserEntityValidator, this.props)
+
+    console.log(errors)
 
     if (errors) {
       throw new ValidationError('Zod validation errors', errors)
@@ -45,7 +49,7 @@ export class UserEntity {
   }
 
   set role (role) {
-    this.role = 'user'
+    this.props.role = 'user'
 
     const hashedRole = crypto
       .createHash('sha256')

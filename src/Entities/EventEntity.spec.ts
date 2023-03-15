@@ -12,20 +12,14 @@ describe('EventEntity', () => {
     dateTime: faker.date.between(new Date(), '2099-01-01')
   }
 
-  const invalidProps: unknown = {
-    id: 'invalid_id',
-    description: 'invalid_desc',
-    createdAt: 'invalid_date',
-    user: 'invalid_user',
-    dateTime: 'invalid_date'
-  }
-
   it('should create a valid event', () => {
     const event = new EventEntity(validProps)
     expect(event).toBeInstanceOf(EventEntity)
   })
 
-  it('should throw array of errors of type ValidationError for invalid events', () => {
-    expect(() => new EventEntity(invalidProps as IEventsEntityProps)).toThrowError(ValidationError)
+  it('should throw a validation error if at least 1 property of event is invalid', () => {
+    const invalidProps = validProps
+    invalidProps.id = 'invalid_id'
+    expect(() => new EventEntity(invalidProps)).toThrowError(ValidationError)
   })
 })
