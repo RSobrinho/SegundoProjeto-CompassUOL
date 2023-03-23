@@ -1,3 +1,5 @@
+import { ZodObject } from 'zod'
+
 class Validator {
   public validate (EntityValidator, props) {
     const keys = Object.keys(props)

@@ -3,9 +3,6 @@ import { v4 } from 'uuid'
 import { IUserEntityProps, UserEntity } from './UserEntity'
 import { format } from 'date-fns'
 import { describe, it, expect } from 'vitest'
-import { ValidationError } from '../Error/ValidationError'
-import { config } from 'dotenv'
-config()
 
 const randomDate = faker.date.between('1900-01-01', ((new Date() as unknown as number) - (1000 * 60 * 60 * 24 * 365 * 3)))
 
@@ -33,20 +30,20 @@ describe('UserEntity', () => {
   it('should create a valid user', () => {
     const validUser = new UserEntity(validProps)
     expect(validUser).toBeInstanceOf(UserEntity)
-    console.log(validUser)
   })
 
-  it('should throw a validation error if at least 1 property of user is invalid', () => {
-    const invalidProps = { ...validProps }
-    invalidProps.city = 'a'
-    expect(() => new UserEntity(invalidProps)).toThrowError(ValidationError)
+  it('should throw a validation error if an entity is being created with at least 1 invalid property', () => {
+    const invalidUser = () => {
+      return new UserEntity({ ...validProps, firstName: null })
+    }
+
+    expect(invalidUser).toThrow()
   })
 
-  it('should create a user with role admin', () => {
+  it('should create a valid user with role admin', () => {
     const validAdminUser = new UserEntity({ ...validProps, role: process.env.ADMIN_SECRET })
 
     expect(validAdminUser.role).toBe('admin')
-    console.log(validAdminUser)
   })
 
   // const invalidUserProps

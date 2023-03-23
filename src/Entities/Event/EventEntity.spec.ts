@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { IEventsEntityProps, EventEntity } from './EventEntity'
 import { v4 } from 'uuid'
 import { faker } from '@faker-js/faker'
-import { ValidationError } from '../Error/ValidationError'
+import { ValidationError } from '../../Error/ValidationError'
 describe('EventEntity', () => {
   const validProps: IEventsEntityProps = {
     id: v4(),

@@ -8,7 +8,7 @@ export const errorResponse = (
   err,
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   const customError = !(
     err.constructor.name === 'NodeError' ||
@@ -22,8 +22,8 @@ export const errorResponse = (
       path: req.path,
       statusCode: err.statusCode || 500,
       message: err.message,
-      cause: err.cause,
-    },
+      cause: err.cause
+    }
   })
 
   next(err)

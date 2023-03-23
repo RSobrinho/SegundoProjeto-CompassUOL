@@ -1,27 +1,9 @@
-import { ValidationError } from '../Error/ValidationError'
-import { z } from 'zod'
-import { validator } from '../Utils/Validator'
+import { ValidationError } from '../../Error/ValidationError'
+import { validator } from '../../Validator/Validator'
 import { v4 } from 'uuid'
 import crypto from 'crypto'
-import { config } from 'dotenv'
-config()
-
-export const UserEntityValidator = z.object({
-  id: z.string().uuid(),
-  firstName: z.string().min(4),
-  lastName: z.string().min(4),
-  birthDate: z.string().min(10),
-  city: z.string().min(4),
-  country: z.string().min(4),
-  email: z.string().email(),
-  password: z.string().min(12),
-  role: z.string(),
-  passwordChangedAt: z.date(),
-  passwordResetToken: z.string(),
-  passwordResetExpires: z.date()
-})
-
-export type IUserEntityProps = z.infer<typeof UserEntityValidator>
+import { IUserEntityProps } from './IUserEntityProps'
+import { UserSchemaValidator } from '../../Validator/UserSchemaValidator'
 
 export class UserEntity {
   private props: IUserEntityProps
@@ -35,13 +17,15 @@ export class UserEntity {
       this.props.id = v4()
     }
 
-    const errors = validator.validate(UserEntityValidator, this.props)
-
-    console.log(errors)
+    const errors = validator.validate(UserSchemaValidator, this.props)
 
     if (errors) {
       throw new ValidationError('Zod validation errors', errors)
     }
+  }
+
+  get id () {
+    return this.props.id
   }
 
   get role () {
